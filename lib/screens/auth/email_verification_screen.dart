@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pccoe_hackathon/screens/auth/sign_in_screen.dart';
 import 'package:pccoe_hackathon/screens/auth/sign_up_screen.dart';
+import 'package:pccoe_hackathon/screens/home/home_screen.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
@@ -66,7 +68,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 shape: PinCodeFieldShape.box,
                 borderRadius: BorderRadius.circular(10),
               ),
-              onCompleted: (val) {},
+              onCompleted: (val) {
+                Navigator.of(context)
+                    .pushReplacementNamed(HomeScreen.routeName);
+              },
             ),
             const SizedBox(
               height: 60,

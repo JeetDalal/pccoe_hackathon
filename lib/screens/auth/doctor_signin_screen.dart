@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pccoe_hackathon/providers/auth_provider.dart';
-import 'package:pccoe_hackathon/screens/auth/email_verification_screen.dart';
-import 'package:pccoe_hackathon/screens/auth/sign_in_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:pccoe_hackathon/screens/auth/doctor_verification_screen.dart';
+import 'package:pccoe_hackathon/screens/auth/sign_up_screen.dart';
+import 'package:pccoe_hackathon/screens/home/home_screen.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class DoctorSigninScreen extends StatefulWidget {
+  const DoctorSigninScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<DoctorSigninScreen> createState() => _DoctorSigninScreenState();
 
-  static const routeName = '/sign-up';
+  static const routeName = '/doctor-sign-in';
 }
 
-class _SignupScreenState extends State<SignupScreen> {
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
+class _DoctorSigninScreenState extends State<DoctorSigninScreen> {
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 50, right: 30, left: 30),
@@ -41,9 +37,13 @@ class _SignupScreenState extends State<SignupScreen> {
               ],
             ),
             Text(
-              "Sign up",
+              "Welcome Back!",
               style:
                   GoogleFonts.roboto(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "Login to continue",
+              style: GoogleFonts.roboto(fontSize: 18, color: Colors.grey),
             ),
             const SizedBox(
               height: 30,
@@ -69,7 +69,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
-                        controller: _email,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                         ),
@@ -103,7 +102,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
-                        controller: _password,
                         obscureText: true,
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -118,12 +116,9 @@ class _SignupScreenState extends State<SignupScreen> {
               height: 60,
             ),
             InkWell(
-              radius: 10,
               onTap: () {
-                // authProvider.signUp(_email.text, _password.text, context);
-                // if (authProvider.userId != null) {
                 Navigator.of(context)
-                    .pushReplacementNamed(EmailVerificationScreen.routeName);
+                    .pushReplacementNamed(HomeScreen.routeName);
               },
               child: Container(
                 height: 50,
@@ -139,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    "Sign up",
+                    "Sign in",
                     style: GoogleFonts.roboto(
                       color: Colors.white,
                       fontSize: 16,
@@ -153,14 +148,14 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             Row(
               children: [
-                Text("Already have an account?"),
+                Text("Dont have an account?"),
                 TextButton(
                     onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(SigninScreen.routeName);
+                      Navigator.of(context).pushReplacementNamed(
+                          DoctorVerificationScreen.routeName);
                     },
                     child: Text(
-                      "Sign in",
+                      "Sign up",
                       style: GoogleFonts.roboto(
                         color: Color.fromARGB(255, 13, 132, 201),
                       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pccoe_hackathon/screens/auth/sign_up_screen.dart';
+import 'package:pccoe_hackathon/screens/home/home_screen.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -113,24 +114,30 @@ class _SigninScreenState extends State<SigninScreen> {
             const SizedBox(
               height: 60,
             ),
-            Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width - 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color.fromARGB(
-                  255,
-                  13,
-                  132,
-                  201,
+            InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(HomeScreen.routeName);
+              },
+              child: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width - 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromARGB(
+                    255,
+                    13,
+                    132,
+                    201,
+                  ),
                 ),
-              ),
-              child: Center(
-                child: Text(
-                  "Sign up",
-                  style: GoogleFonts.roboto(
-                    color: Colors.white,
-                    fontSize: 16,
+                child: Center(
+                  child: Text(
+                    "Sign in",
+                    style: GoogleFonts.roboto(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
