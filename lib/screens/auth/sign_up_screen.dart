@@ -119,11 +119,22 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             InkWell(
               radius: 10,
-              onTap: () {
+              onTap: () async {
+                await authProvider.signUp(_email.text, _password.text);
+                if (authProvider.userId != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('User registered successfully')));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content:
+                          Text('An error occured while registering user!')));
+                }
+                Navigator.of(context).pushReplacementNamed(
+                    EmailVerificationScreen.routeName,
+                    arguments: authProvider.userId);
+
                 // authProvider.signUp(_email.text, _password.text, context);
                 // if (authProvider.userId != null) {
-                Navigator.of(context)
-                    .pushReplacementNamed(EmailVerificationScreen.routeName);
               },
               child: Container(
                 height: 50,

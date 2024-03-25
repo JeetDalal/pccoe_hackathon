@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pccoe_hackathon/providers/auth_provider.dart';
 import 'package:pccoe_hackathon/screens/auth/sign_up_screen.dart';
 import 'package:pccoe_hackathon/screens/home/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -13,8 +15,12 @@ class SigninScreen extends StatefulWidget {
 }
 
 class _SigninScreenState extends State<SigninScreen> {
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 50, right: 30, left: 30),
@@ -68,6 +74,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
+                        controller: _email,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                         ),
@@ -101,6 +108,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: TextField(
+                        controller: _password,
                         obscureText: true,
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -115,9 +123,17 @@ class _SigninScreenState extends State<SigninScreen> {
               height: 60,
             ),
             InkWell(
-              onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(HomeScreen.routeName);
+              onTap: () async {
+                await authProvider.signIn(_email.text, _password.text);
+                if (authProvider.userId != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Login was successful')));
+                  Navigator.of(context)
+                      .pushReplacementNamed(HomeScreen.routeName);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('unable to sign in user')));
+                }
               },
               child: Container(
                 height: 50,

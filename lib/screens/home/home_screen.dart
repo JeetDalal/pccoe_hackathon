@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pccoe_hackathon/providers/model_data_provider.dart';
 import 'package:pccoe_hackathon/screens/ResultScreen.dart';
+import 'package:pccoe_hackathon/screens/looks_good.dart';
+import 'package:pccoe_hackathon/screens/reports.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -105,45 +110,49 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 40,
             ),
             InkWell(
-              onTap: () {
-                _provider.runInference();
+              onTap: () async {
+                await _provider.uploadImage();
+                if (_provider.result != null) {
+                  if (json.decode(_provider.result!) == "Normal") {
+                    Navigator.of(context).pushNamed(LooksGood.routeName);
+                  } else {
+                    Navigator.of(context)
+                        .pushNamed(DownSyndromeReport.routeName);
+                  }
+                }
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => ResultScreen(
+                //         advise: "Immediate medical help required!",
+                //         reasons: [
+                //           "Trisomy 21",
+                //           "Mosaic Down Syndrome",
+                //           "Translocation Down Syndrome",
+                //           "Advanced Maternal Age"
+                //         ],
+                //         diagnosis: "First-Trimester Combined Screening",
+                //         doctors: [
+                //           "Dipen Sharma",
+                //           "Raj Mahlotra",
+                //           "Swaraj Khadge"
+                //         ],
+                //         abnormalitiesPercentage: 87,
+                //         isDownSyndromeDetected: true),
+                //   ),
+                // );
               },
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ResultScreen(
-                          advise: "Immediate medical help required!",
-                          reasons: [
-                            "Trisomy 21",
-                            "Mosaic Down Syndrome",
-                            "Translocation Down Syndrome",
-                            "Advanced Maternal Age"
-                          ],
-                          diagnosis: "First-Trimester Combined Screening",
-                          doctors: [
-                            "Dipen Sharma",
-                            "Raj Mahlotra",
-                            "Swaraj Khadge"
-                          ],
-                          abnormalitiesPercentage: 87,
-                          isDownSyndromeDetected: true),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Detect down syndrome",
-                      style:
-                          GoogleFonts.roboto(color: Colors.white, fontSize: 16),
-                    ),
+              child: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    "Detect down syndrome",
+                    style:
+                        GoogleFonts.roboto(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ),

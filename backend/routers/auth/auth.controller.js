@@ -40,7 +40,7 @@ async function signUpUser(req,res) {
       res.json({ message: 'User registered successfully',userId:data.UserSub});
     }
   });
-  createUser("ABCDE")
+  // createUser("ABCDE")
 }
 
 async function verifyUser(req,res){

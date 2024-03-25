@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pccoe_hackathon/providers/auth_provider.dart';
 import 'package:pccoe_hackathon/screens/auth/sign_in_screen.dart';
 import 'package:pccoe_hackathon/screens/auth/sign_up_screen.dart';
 import 'package:pccoe_hackathon/screens/home/home_screen.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
@@ -18,6 +20,8 @@ class EmailVerificationScreen extends StatefulWidget {
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)!.settings.arguments as String;
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 50, right: 30, left: 30),
@@ -68,9 +72,15 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 shape: PinCodeFieldShape.box,
                 borderRadius: BorderRadius.circular(10),
               ),
-              onCompleted: (val) {
-                Navigator.of(context)
-                    .pushReplacementNamed(HomeScreen.routeName);
+              onCompleted: (val) async {
+                // int value = int.parse(val);
+                await authProvider.verifyOTP(val, data);
+                if (authProvider.verifiedStatus == "VERIFIED") {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text("OTP Verified")));
+                  Navigator.of(context)
+                      .pushReplacementNamed(HomeScreen.routeName);
+                }
               },
             ),
             const SizedBox(

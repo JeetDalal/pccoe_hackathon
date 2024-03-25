@@ -8,6 +8,8 @@ import 'package:pccoe_hackathon/screens/auth/sign_in_screen.dart';
 import 'package:pccoe_hackathon/screens/auth/sign_up_screen.dart';
 import 'package:pccoe_hackathon/screens/carousel/causcreen.dart';
 import 'package:pccoe_hackathon/screens/home/home_screen.dart';
+import 'package:pccoe_hackathon/screens/looks_good.dart';
+import 'package:pccoe_hackathon/screens/reports.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -45,7 +47,9 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (context) => HomeScreen(),
           DoctorSigninScreen.routeName: (context) => DoctorSigninScreen(),
           DoctorVerificationScreen.routeName: (context) =>
-              DoctorVerificationScreen()
+              DoctorVerificationScreen(),
+          LooksGood.routeName: (context) => LooksGood(),
+          DownSyndromeReport.routeName: (context) => DownSyndromeReport()
         },
       ),
     );
